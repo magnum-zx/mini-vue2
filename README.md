@@ -2,6 +2,18 @@
 
 实现一个Vue2框架
 
+# Rollup 配置位置
+
+`rollup.config.js`
+
+# 启动项目
+
+`npm run dev`
+
+# 测试入口
+
+打包完的vue.js可以在 `dist/index.html` 中测试
+
 # Plan
 
 - [x] 使用Rollup搭建开发环境
