@@ -1,4 +1,5 @@
 import babel from 'rollup-plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
 // rollup 配置
 export default {
 	input: './src/index.js', // 入口
@@ -12,5 +13,6 @@ export default {
 		babel({
 			exclude: 'node_modules/**', // 排除node_modules
 		}),
+		resolve(),
 	],
 }

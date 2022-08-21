@@ -7,7 +7,7 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<script src="vue.js"></script>
+		<script src="../vue.js"></script>
 		<script>
 			// 响应式
 			const vm = new Vue({
@@ -15,12 +15,15 @@
 					return {
 						name: 'zf',
 						age: 20,
+						address: '',
+						arr: [1, 2],
 					}
 				},
 			})
 			debugger
-			console.log(vm.name)
-			console.log(vm.name === vm._data.name)
+			vm.arr.push('1')
+			console.log(vm.arr)
+			// console.log()
 		</script>
 	</body>
 </html>

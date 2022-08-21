@@ -56,6 +56,8 @@
       },
       set: function set(newValue) {
         if (newValue === value) return;
+        observe(newValue); // 如果newValue是个对象，需要再次劫持
+
         value = newValue;
       }
     });
@@ -66,7 +68,17 @@
       _classCallCheck(this, Observer);
 
       // Object.defineProperty只能劫持已存在的属性（因此需要增加api如 Vue.$set，Vue.$delete等）
-      this.walk(data); // 遍历属性
+      if (!data.hasOwnProperty('__ob__')) {
+        // data.__ob__ = this
+        Object.defineProperty(data, '__ob__', {
+          value: this,
+          enumerable: false
+        });
+      }
+
+      if (Array.isArray(data)) ; else {
+        this.walk(data); // 遍历属性
+      }
     }
 
     _createClass(Observer, [{
@@ -77,13 +89,20 @@
           return defineReactive(data, key, data[key]);
         });
       }
+    }, {
+      key: "observeArray",
+      value: function observeArray(data) {
+        data.forEach(function (item) {
+          return observe(item);
+        });
+      }
     }]);
 
     return Observer;
   }();
 
   function initState(vm) {
-    var opts = vm.$option;
+    var opts = vm.$options;
 
     if (opts.data) {
       initData(vm);
@@ -91,7 +110,7 @@
   }
 
   function initData(vm) {
-    var data = vm.$option.data; // data可能是函数或者对象
+    var data = vm.$options.data; // data可能是函数或者对象
 
     data = typeof data === 'function' ? data.call(vm) : data;
     vm._data = data; // 将data挂载到vm上
@@ -116,15 +135,48 @@
     });
   }
 
+  function compileToFunction(template) {
+    console.log(template);
+  }
+
   // 做一些初始化操作
   function initMixin(Vue) {
     Vue.prototype._init = function (options) {
       // vm.$options 就是获取用户的配置
       var vm = this;
-      vm.$option = options; // 将用户的options 挂载到实例上
+      vm.$options = options; // 将用户的options 挂载到实例上
       // 初始化状态
 
       initState(vm);
+
+      if (options.el) {
+        vm.$mount(options.el);
+      }
+    };
+
+    Vue.prototype.$mount = function (el) {
+      var vm = this;
+      el = document.querySelector(el);
+      var ops = vm.$options;
+
+      if (!ops.render) {
+        var template;
+
+        if (!ops.template && el) {
+          // 没有template 但是有 el
+          template = el.outerHTML;
+        } else if (el) {
+          template = ops.template;
+        }
+
+        if (template) {
+          var render = compileToFunction(template);
+          ops.render = render;
+        } // console.log(template)
+
+      } // script 标签引用的vue.global.js 编译过程是在浏览器
+      // runtime 不包含模板语法，整个编译是打包的时候通过loader转义.vue文件的
+
     };
   }
 

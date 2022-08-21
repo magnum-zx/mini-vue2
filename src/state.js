@@ -1,14 +1,14 @@
-import { observe } from './observe/index'
+import { observe } from './observe'
 
 export function initState(vm) {
-	const opts = vm.$option
+	const opts = vm.$options
 	if (opts.data) {
 		initData(vm)
 	}
 }
 
 function initData(vm) {
-	let data = vm.$option.data // data可能是函数或者对象
+	let data = vm.$options.data // data可能是函数或者对象
 	data = typeof data === 'function' ? data.call(vm) : data
 	vm._data = data // 将data挂载到vm上
 
