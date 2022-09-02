@@ -1,3 +1,5 @@
+import Dep from './dep'
+
 export function observe(data) {
 	// 只针对对象劫持
 	if (typeof data !== 'object' || data === null) {
@@ -9,14 +11,20 @@ export function observe(data) {
 
 export function defineReactive(target, key, value) {
 	observe(value)
+	let dep = new Dep() // 每个属性都有一个dep
 	Object.defineProperty(target, key, {
 		get() {
+			// 依赖收集
+			if (Dep.target) {
+				dep.depend()
+			}
 			return value
 		},
 		set(newValue) {
 			if (newValue === value) return
 			observe(newValue) // 如果newValue是个对象，需要再次劫持
 			value = newValue
+			dep.notify()
 		},
 	})
 }

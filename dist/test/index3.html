@@ -8,9 +8,8 @@
 	</head>
 	<body>
 		<div id="app">
-			<div style="color: red">{{name}} Hello</div>
+			<div>{{name}}</div>
 			<span>{{age}}</span>
-			<br />
 		</div>
 		<script src="../vue.js"></script>
 		<script>
@@ -22,6 +21,12 @@
 					address: { a: 1, b: 2 },
 					arr: [1, 2],
 				},
+
+				// el: '#app', // 将数据解析到el上
+				template: '<div></div>',
+				// render(h) {
+				// 	h()
+				// },
 			}).$mount('#app')
 
 			// 1、模板引擎
