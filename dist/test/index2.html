@@ -7,23 +7,29 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<div id="app">
-			<div style="color: red">{{name}} Hello</div>
+		<div id="app" style="color: green">
+			<div style="color: red">{{name}} Hello {{ height }} hello</div>
 			<span>{{age}}</span>
 			<br />
 		</div>
 		<script src="../vue.js"></script>
 		<script>
 			// 响应式
-			const vm = new Vue({
+			let vm = new Vue({
 				data: {
 					name: 'zf',
 					age: 20,
 					address: { a: 1, b: 2 },
 					arr: [1, 2],
+					height: 1,
 				},
 			}).$mount('#app')
-
+			setTimeout(() => {
+				vm.name = 'a'
+				vm.age = 2
+				vm.height = 2
+			})
+			// console.log(vm)
 			// 1、模板引擎
 			// 2、采用虚拟DOM，数据变化后比较虚拟DOM的差异 最后更新差异的的地方
 			// 3、核心：将模板->js语法，通过js语法生成虚拟DOM

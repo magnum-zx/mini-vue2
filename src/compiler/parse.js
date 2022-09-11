@@ -18,7 +18,6 @@ const comment = /^<!\--/
 const conditionalComment = /^<!\[/
 
 // text
-const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g // {{name}} 匹配表达式的变量
 const regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g
 
 export function parseHTML(html) {
@@ -51,6 +50,7 @@ export function parseHTML(html) {
 		currentParent = node
 		// console.log(tag, attrs, '开始')
 	}
+
 	function chars(text) {
 		// 文本直接放到当前指向的节点
 		text = text.replace(/\s/g, '')
@@ -61,6 +61,7 @@ export function parseHTML(html) {
 			})
 		// console.log(text, '文本')
 	}
+
 	function end(tag) {
 		stack.pop() // 弹出最后一个
 		currentParent = stack[stack.length - 1]
@@ -70,6 +71,7 @@ export function parseHTML(html) {
 	function advance(n) {
 		html = html.substring(n)
 	}
+
 	function parseStartTag() {
 		const start = html.match(startTagOpen)
 		if (start) {
