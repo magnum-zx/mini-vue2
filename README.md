@@ -1,6 +1,6 @@
 # mini-vue2
 
-实现一个Vue2框架
+实现一个简单的Vue2框架
 
 # Rollup 配置位置
 
@@ -14,7 +14,7 @@
 
 打包完的vue.js可以在 `dist/index.html` 中测试
 
-# Plan
+# 计划表
 
 - [x] 使用Rollup搭建开发环境
 - [x] Vue响应式原理实现，对象属性劫持、深度劫持
