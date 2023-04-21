@@ -1,20 +1,20 @@
 # mini-vue2
 
-实现一个简单的Vue2框架
+Implement a simple Vue2 framework, learning the feature of the Vue2
 
-# Rollup 配置位置
+## Rollup setting file
 
 `rollup.config.js`
 
-# 启动项目
+## Start project
 
 `npm run dev`
 
-# 测试入口
+## Test file entry
 
 打包完的vue.js可以在 `dist/index.html` 中测试
 
-# 计划表
+## Plan list
 
 - [x] 使用Rollup搭建开发环境
 - [x] Vue响应式原理实现，对象属性劫持、深度劫持
